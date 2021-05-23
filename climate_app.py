@@ -72,6 +72,7 @@ def precipitation():
         precip_dict["prcp"] = year_precipitation[1]
         all_rain.append(precip_dict)
 
+
     return jsonify(all_rain)
 
 ################stations is returning a result
@@ -139,6 +140,7 @@ def trip_1(start):
     start_data = start_date - one_year
     max_date = dt.date(2017, 8, 23)
 
+    #query
     trip_data = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
         filter(Measurement.date >= start_data).filter(Measurement.date <= max_date).all()
         
@@ -151,21 +153,23 @@ def trip_1(start):
 
 ########################################### 
 @app.route("//api/v1.0/<start>/<end>")
-def trip_2(start):
+def trip_2(start, end):
 
     """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
     print("Received API request")
 
     # When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive.
-    #update last route with additional variable/function
+    # update last route with additional variable/function
     #finding year's worth of data as starting point; most recent date/endpoint : 2017-08-23
     start_date = dt.datetime.strptime(start, "%Y-%m-%d")
+    end_date = dt.datetime.strptime(end, "%Y-%m-%d")
     one_year =  dt.timedelta(days=365)
     start_data = start_date - one_year
-    end_date = dt.datetime.strptime(start, "%Y-%m-%d")
+    end_data = end_date - one_year
 
+    #query
     trip_data = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-        filter(Measurement.date >= start_data).filter(Measurement.date <= max_date).all()
+        filter(Measurement.date >= start_data).filter(Measurement.date <= end_data).all()
         
     session.close()
 
