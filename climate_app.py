@@ -46,7 +46,7 @@ def welcome():
         f"/api/v1.0/<start>/<end>"
     )
 
-##########precipitation is returning results; not closing session caused error of not being able to use the branches without restarting test
+##########precipitation is returning results, formatted a little incorrectly; not closing session caused error of not being able to use the branches without restarting test
 # Convert the query results to a dictionary using date as the key and prcp as the value. Using jupyter notebook queries as basis.
 # Return the JSON representation of your dictionary.
 
@@ -129,7 +129,7 @@ def tobs():
 
 ########################################### 
 @app.route("//api/v1.0/<start>")
-def trip_1(start):
+def start_date(start):
 
     """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
     print("Received API request")
@@ -153,7 +153,7 @@ def trip_1(start):
 
 ########################################### 
 @app.route("//api/v1.0/<start>/<end>")
-def trip_2(start, end):
+def start_and_end(start, end):
 
     """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
     print("Received API request")
